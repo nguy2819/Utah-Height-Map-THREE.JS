@@ -35,9 +35,15 @@ const material = new THREE.MeshStandardMaterial({
 
 const plane = new THREE.Mesh(geometry, material)
 scene.add(plane)
+
+plane.scale.x = .6;
+plane.scale.y = .6;
+
+plane.translateX(0.35)
+
 plane.rotation.x = 571
 
-gui.add(plane.rotation, 'x').min(0).max(600)
+gui.add(plane.rotation, 'z').min(0).max(8)
 
 // Mesh
 // const sphere = new THREE.Mesh(geometry,material)
@@ -65,14 +71,14 @@ gui.addColor(col, 'color').onChange(() => {
  * Sizes
  */
 const sizes = {
-    width: window.innerWidth,
+    width: window.innerWidth * .7,
     height: window.innerHeight
 }
 
 window.addEventListener('resize', () =>
 {
     // Update sizes
-    sizes.width = window.innerWidth
+    sizes.width = window.innerWidth * .7
     sizes.height = window.innerHeight
 
     // Update camera
@@ -102,7 +108,8 @@ scene.add(camera)
  * Renderer
  */
 const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
+    canvas: canvas, 
+    alpha: true
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
@@ -110,6 +117,14 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 /**
  * Animate
  */
+
+ document.addEventListener('mousemove', animateTerrain)
+
+ let mouseY = 0
+
+ function animateTerrain(event) {
+     mouseY = event.clientY
+ }
 
 const clock = new THREE.Clock()
 
@@ -121,7 +136,9 @@ const tick = () =>
     // Update objects
     // sphere.rotation.y = .5 * elapsedTime
 
-    plane.rotation.z = .5 * elapsedTime
+    // plane.rotation.z = .5 * elapsedTime
+    
+    plane.material.displacementScale = .4 + mouseY * 0.00098
 
     // Update Orbital Controls
     // controls.update()
@@ -134,3 +151,21 @@ const tick = () =>
 }
 
 tick()
+
+
+gsap.registerPlugin(CSSRulePlugin);
+        const tl = gsap.timeline({defaults: { ease: 'power2.out'}});
+        const rule = CSSRulePlugin.getRule('.confirm:before');
+  
+        tl.to('.label', {opacity: 0, height: 0, position: 'absolute', duration: '.2s'})
+          .to('.confirm', {borderRadius: '50%', width: '2.5em', height: '2.5em', ease: 'elastic.out(0.7, 0.3)'}, '-=.5s')
+          .to(rule, {borderRadius: '50%'}, '-=1s')
+          .to('.check', {strokeDasharray: '90 103'}, "-=1")
+          .to('path', {attr: {d: 'M145.8,236.314l16.359-18.148L145.8,200.681'}}, "+=1")
+          .to('p', {clipPath: 'circle(100% at 50% 50%)', duration: 1.2})
+          .to('p', {
+              background: 'white',
+              onComplete: () => {
+              window.location.href = '/'
+          }})
+          tl.pause();
