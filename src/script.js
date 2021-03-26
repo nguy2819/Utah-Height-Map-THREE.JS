@@ -7,8 +7,8 @@ import * as dat from 'dat.gui'
 // Texture Loader
 const loader = new THREE.TextureLoader()
 const height = loader.load('height.jpg')
-const texture = loader.load('/utahheightmap.jpg')
-const alpha = loader.load('/alpha.gif')
+const texture = loader.load('utahheightmap.jpg')
+const alpha = loader.load('alpha.gif')
 
 // Debug
 const gui = new dat.GUI()
