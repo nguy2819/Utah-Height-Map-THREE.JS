@@ -3,6 +3,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui'
 
+
 // Texture Loader
 const loader = new THREE.TextureLoader()
 const height = loader.load('height.jpg')
@@ -151,21 +152,3 @@ const tick = () =>
 }
 
 tick()
-
-
-gsap.registerPlugin(CSSRulePlugin);
-        const tl = gsap.timeline({defaults: { ease: 'power2.out'}});
-        const rule = CSSRulePlugin.getRule('.confirm:before');
-  
-        tl.to('.label', {opacity: 0, height: 0, position: 'absolute', duration: '.2s'})
-          .to('.confirm', {borderRadius: '50%', width: '2.5em', height: '2.5em', ease: 'elastic.out(0.7, 0.3)'}, '-=.5s')
-          .to(rule, {borderRadius: '50%'}, '-=1s')
-          .to('.check', {strokeDasharray: '90 103'}, "-=1")
-          .to('path', {attr: {d: 'M145.8,236.314l16.359-18.148L145.8,200.681'}}, "+=1")
-          .to('p', {clipPath: 'circle(100% at 50% 50%)', duration: 1.2})
-          .to('p', {
-              background: 'white',
-              onComplete: () => {
-              window.location.href = '/'
-          }})
-          tl.pause();
